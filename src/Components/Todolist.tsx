@@ -19,7 +19,6 @@ export default function TodoList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentindex, setcurrentindex] = useState<number>();
   const [Employedata,  setEmployedata] = useState<any[]>([]);
-  const [selectedindex,setselectedindex] = useState<any>()
   useEffect(() => {
     setData(Employedata);
     // setFilteredData(setFilteredData);
@@ -141,8 +140,6 @@ const DataDelete = async (id: number) => {
 };
 
 
-
-
   const handleUpdate = (index: number, id?:number|undefined) => {
     console.log(currentindex == id);
     console.log(currentindex , id);
@@ -192,7 +189,13 @@ const DataDelete = async (id: number) => {
         className="w-full px-4 py-2 text-sm text-gray-700 dark:text-white dark:bg-gray-800 outline-none"
       />
       <button onClick={handleSearch} className="px-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-        <img src="/search.svg" alt="search" className="w-5 h-5" />
+<Image 
+    src="search.svg" // ✅ use the correct file name from /public
+    alt="Search" 
+    width={20} 
+    height={20} 
+    className="w-5 h-5" 
+  />
       </button>
     </div>
 
