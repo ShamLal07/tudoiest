@@ -78,15 +78,12 @@ export default function TodoList() {
   };
 
   const upDatedata = async (dt: Employee, id?: number) => {
-    console.log('id', id);
-    console.log('DT', dt);
     if (id !== undefined) {
       const { data, error } = await supabase
         .from('empoly_list')
         .update({ FirstName: dt.FirstName, LastName: dt.LastName, job: dt.job, age: dt.age })
         .eq('id', id)
         .select();
-      console.log(data, 'fdijjfidjixfjdifjidjfidkjfi');
       console.log('error', error);
     }
   };
@@ -113,7 +110,7 @@ export default function TodoList() {
       job,
       age: Number(age),
     };
-    const dt = [...filteredData, newObj];
+    const dt = [...filteredData];
     setData(dt);
     setFilteredData(dt);
     setConfirm(true);
