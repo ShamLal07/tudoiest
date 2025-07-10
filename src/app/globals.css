@@ -25,9 +25,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 @media (max-width: 640px) {
-  .table-container table {
-    display: block;
-  }
+.table-container table {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
   .table-container thead {
     display: none;
   }
