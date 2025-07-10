@@ -27,13 +27,18 @@ body {
 @media (max-width: 640px) {
 .table-container table {
     text-align: center;
-    display: flex;
     justify-content: center;
     padding: 30px;
 }
   .table-container thead {
     display: none;
   }
+  .table-container td[data-label="Actions"]:before {
+    content: attr(data-label);
+    width: 40%;
+    font-weight: bold;
+    text-align: center;
+}
   .table-container tr {
     display: block;
     margin-bottom: 1rem;
