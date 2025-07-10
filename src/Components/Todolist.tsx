@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { supabase } from '../supabaseClient';
+import DialogBox from './DialogBox'; // Assuming DialogBox is used for confirmation
 
 // Define Employee interface for type safety
 interface Employee {
@@ -34,7 +35,7 @@ export default function TodoList() {
   const InsertRow = async (newObj: Employee) => {
     console.log(newObj);
     const { data: newData, error } = await supabase
-      .from('empoly_list') // Kept as per original code; confirm if it should be 'employee_list'
+      .from('empoly_list') // Kept as per original; confirm if it should be 'employee_list'
       .insert([{ FirstName: newObj.FirstName, LastName: newObj.LastName, job: newObj.job, age: newObj.age }])
       .select();
     console.log(newData, 'New_data');
@@ -44,7 +45,7 @@ export default function TodoList() {
   };
 
   const getData = async () => {
-    const { data: empoly_list, error } = await supabase.from('empoly_list').select('*'); // Kept as per original
+    const { data: empoly_list, error } = await supabase.from('empoly_list').select('*');
     console.log(error, 'dksmdksmdks');
     console.log(empoly_list, 'sdkdsmkdskdmskds');
     if (empoly_list) setFilteredData(empoly_list as Employee[]);
@@ -81,7 +82,7 @@ export default function TodoList() {
     console.log('DT', dt);
     if (id !== undefined) {
       const { data, error } = await supabase
-        .from('empoly_list') // Kept as per original
+        .from('empoly_list')
         .update({ FirstName: dt.FirstName, LastName: dt.LastName, job: dt.job, age: dt.age })
         .eq('id', id)
         .select();
@@ -121,7 +122,7 @@ export default function TodoList() {
   };
 
   const DataDelete = async (id: number) => {
-    const { error } = await supabase.from('empoly_list').delete().eq('id', id); // Kept as per original
+    const { error } = await supabase.from('empoly_list').delete().eq('id', id);
     if (error) console.error('Delete Error:', error);
   };
 
@@ -337,31 +338,21 @@ export default function TodoList() {
         </table>
       </div>
 
+      {/* Confirmation Dialog */}
       {isConfirm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md text-center max-w-md w-full">
-            <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">User Added Successfully</h2>
-            <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">You can now add another or close this window.</p>
-            <div className="flex gap-2 justify-center">
-              <button
-                onClick={() => {
-                  setFirstName('');
-                  setLastName('');
-                  setAge('');
-                  setJob('');
-                  setConfirm(false);
-                  setAddUser(true);
-                }}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Add More
-              </button>
-              <button onClick={handleConfirmBox} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
+        <DialogBox
+          isOpen={isConfirm}
+          onClose={handleConfirmBox}
+          onConfirm={() => {
+            setFirstName('');
+            setLastName('');
+            setAge('');
+            setJob('');
+            setConfirm(false);
+            setAddUser(true);
+          }}
+          message="You can now add another or close this window."
+        />
       )}
     </div>
   );
