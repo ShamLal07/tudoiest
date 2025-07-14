@@ -122,7 +122,7 @@ export default function TodoList() {
     const { error } = await supabase.from('empoly_list').delete().eq('id', id);
     if (error) console.error('Delete Error:', error);
   };
-
+  
   const handleDelete = (id: number) => {
     if (id > 0 && window.confirm('Are you sure delete?')) {
       const newData = filteredData.filter((item) => item.id !== id);
